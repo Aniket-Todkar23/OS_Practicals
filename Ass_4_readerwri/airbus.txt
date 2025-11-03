@@ -1,0 +1,10 @@
+AB101 New York
+AB102 London
+AB103 Tokyo
+AB104 Paris
+AB105 Dubai
+AB106 Singapore
+AB107 Sydney
+AB108 Mumbai
+AB109 Frankfurt
+AB110 Amsterdam
