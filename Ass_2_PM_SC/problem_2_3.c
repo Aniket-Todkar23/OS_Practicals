@@ -47,12 +47,6 @@ int main(int argc, char *argv[]) {
     pid_t pid;
     int n;
     int status;
-    
-    printf("╔═══════════════════════════════════════════════╗\n");
-    printf("║  Problem 2.3: Prime Number Generation        ║\n");
-    printf("║  Using fork() and wait()                      ║\n");
-    printf("╚═══════════════════════════════════════════════╝\n\n");
-    
     // Check if command line argument is provided
     if (argc == 2) {
         n = atoi(argv[1]);  // Convert string to integer
