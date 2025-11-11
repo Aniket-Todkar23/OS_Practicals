@@ -11,7 +11,7 @@ sem_t empty;
 sem_t full;
 
 
-void *producer(void *arg);{
+void *producer(void *arg){
     int pizza_num;
     for(int i=1;i<=10;i++){
         pizza_num=i;
@@ -27,7 +27,7 @@ void *producer(void *arg);{
     printf("\nProducer: Done producing all pizzas!\n");
     return NULL;
 }
-void *consumer(void *arg);{
+void *consumer(void *arg){
     int pizza_num;
     for(int i=1;i<=10;i++){
         sem_wait(&full);
@@ -42,4 +42,16 @@ void *consumer(void *arg);{
     }
     printf("\nConsumer: Done consuming all pizzas!\n");
     return NULL;
+}
+int main(){
+    pthread_t joey,simpson;
+
+    sem_init(&empty,0,BUFFERSIZE);
+    sem_init(&full,0,0);
+
+    pthread_create(&simpson,NULL,producer,NULL);
+    pthread_create(&joey,NULL,consumer,NULL);
+
+    pthread_join(simpson,NULL);
+    pthread_join(joey,NULL);
 }

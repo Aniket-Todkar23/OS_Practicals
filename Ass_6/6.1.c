@@ -100,6 +100,63 @@ void lru(int pages[],int n,int frames){
 
 
 }
+void optimal(int pages[],int n,int frames){
+    int pagefault=0;
+    int frame[frames];
+    for(int i=0;i<frames;i++){
+        frame[i]=-1;
+    }
+    printf("Ref | frames | fault?\n");
+    printf("----|--------|-------\n");
+    for(int i=0;i<n;i++){
+        int found = 0;
+        int emp_frame=-1;
+        int page=pages[i];
+        for(int j=0;j<frames;j++){
+            if(frame[j]==page){
+                found=1;
+                break;
+            }
+            if(frame[j]==-1 && emp_frame==-1) emp_frame=j;
+        }
+        if(!found){
+            pagefault++;
+            if(emp_frame!=-1){
+                frame[emp_frame]=page;
+            }
+            else{
+                int repidx=0;
+                int farthest=-1;
+                for(int j=0;j<frames;j++){
+                    int nxt_use=-1;
+                    for(int k=i+1;k<n;k++){
+                        if(pages[k]==frame[j]){
+                            nxt_use=k;
+                            break;
+                        }
+                    }
+                    if(nxt_use==-1){
+                        repidx=j;
+                        break;
+                    }
+                    if(nxt_use>farthest){
+                        farthest=nxt_use;
+                        repidx=j;
+                    }
+                }
+                frame[repidx]=page;
+            }
+             printf("%d\t ",page);
+                display(frames,frame);
+                printf("| Yes\n");
+        }else{
+            printf("%d\t ",page);
+                display(frames,frame);
+                printf("| No\n");
+        }
+    }
+
+}
 
 int main(){
    int n;
@@ -117,6 +174,8 @@ int main(){
     printf("Menu\n");
     printf("1)FIFO\n");
     printf("2)LRU\n");
+    printf("3)Optimal\n");
+
     printf("4)Exit\n");
     printf("Enter Choice :");
     int choice;
@@ -128,6 +187,9 @@ int main(){
         break;
     case 2:
         lru(pages,n,frames);
+        break;
+    case 3:
+        optimal(pages,n,frames);
         break;
     case 4:
         printf("Exiting...");
